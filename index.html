@@ -2,126 +2,41 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>obenkyo</title>
+  <title>obenkyo2</title>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
-
-<div id="app">
- {{ message }}
-</div>
-
-<div id="app-2">
-  <span v-bind:title="message">
-    titleに値がbindされているはず
-  </span>
-</div>
-
-<div id="app-3">
-  <span v-if="seen">true</span>
-  <span v-if="notSeen"> false</span>
-</div>
-
-<div id="app-4">
-  <ol>
-    <li v-for="todo in todos">
-      {{ todo.text }}
-    </li>
-  </ol>
-</div>
-
-<div id="app-5">
-  <p>{{ message }}</p>
-  <button v-on:click="reverseMessage">逆にするやで</button>
-</div>
-
-<div id="app-6">
-  <p>{{ message }}</p>
-  <input type="text" v-model="message" />
-</div>
-
-<div id="app-7">
-  <ol>
-    <todo-item />
-  </ol>
-  <ol>
-    <todo-item-2 v-for='item in itemList' v-bind:todo='item' v-bind:key='item.id' />
-  </ol>
-</div>
+  <div id="app">
+    <div>
+      <input type="text" v-model="message" />
+      <button v-on:click="handleClick" >Add Todo</button>
+    </div>
+    <ol>
+      <li v-for='(todo, index) in todos' v-bind:key='todo.id'>{{ todo.value }}</li>
+    </ol>
+  </div>
 
 <script>
+
+let id = 1;
 
 const app = new Vue({
   el: '#app',
   data: {
-    message: 'ハローワールド'
-  }
-});
-
-const app2 = new Vue({
-  el: '#app-2',
-  data: {
-    message: 'ハローワールド2'
-  }
-});
-
-const app3 = new Vue({
-  el: '#app-3',
-  data: {
-    seen: true,
-    notSeen: false
-  }
-});
-
-const app4 = new Vue({
-  el: '#app-4',
-  data: {
     todos: [
-      { text: 'a' },
-      { text: 'b' },
-      { text: 'c' },
-    ]
-  }
-});
-
-const app5 = new Vue({
-  el: '#app-5',
-  data: {
-    message: 'aiueo'
+      { id: id++, value: 'aaa' },
+      { id: id++, value: 'bbb' },
+      { id: id++, value: 'ccc' },
+    ],
+    message: ''
   },
   methods: {
-    reverseMessage: function () {
-      this.message = this.message.split('').reverse().join('')
+    handleClick: function () {
+      this.todos.push({ id: id++, value: this.message });
     }
   },
 });
 
-const app6 = new Vue({
-  el: '#app-6',
-  data: {
-    message: 'aiueo'
-  }
-});
-
-const app7 = new Vue({
-  el: '#app-7',
-  data: {
-    itemList: [
-      {id: 1, value: 'aaa'},
-      {id: 2, value: 'bbb'},
-      {id: 3, value: 'ccc'},
-    ]
-  }
-});
-
-Vue.component('todo-item', {
-  template: `<li>todo-item</li>`
-});
-
-Vue.component('todo-item-2', {
-  props: ['todo'],
-  template: `<li>{{ todo.value }}</li>`
-});
 
 </script>
 </body>
