@@ -9,10 +9,13 @@
   <div id="app">
     <div>
       <input type="text" v-model="message" />
-      <button v-on:click="handleClick" >Add Todo</button>
+      <button v-on:click="handleClickAddTodo">Add Todo</button>
     </div>
     <ol>
-      <li v-for='(todo, index) in todos' v-bind:key='todo.id'>{{ todo.value }}</li>
+      <li v-for='(todo, index) in todos' v-bind:key='todo.id'>
+        {{ todo.value }}
+        <button v-on:click="handleClickDeleteTodo(todo.id)">×</button>
+      </li>
     </ol>
   </div>
 
@@ -31,12 +34,14 @@ const app = new Vue({
     message: ''
   },
   methods: {
-    handleClick: function () {
+    handleClickAddTodo: function () {
       this.todos.push({ id: id++, value: this.message });
+    },
+    handleClickDeleteTodo: function (id) {
+      this.todos = this.todos.filter(todo => todo.id !== id);
     }
   },
 });
-
 
 </script>
 </body>
